@@ -4,7 +4,7 @@
 
   <img src="./assets/icon.png" alt="Rose Icon" width="128" height="128">
 
-[![Installer](https://img.shields.io/badge/Installer-Windows-32A832)](https://github.com/Alban1911/Rose/releases/latest) [![Ko-Fi](https://img.shields.io/badge/KoFi-Donate-C03030?logo=ko-fi&logoColor=white)](https://ko-fi.com/roseapp) [![Discord](https://img.shields.io/discord/1490473857075642621?color=32A832&logo=discord&logoColor=white&label=Discord)](https://discord.com/invite/roseskins) [![License](https://img.shields.io/badge/License-MIT-C03030)](LICENSE) [![Downloads](https://img.shields.io/github/downloads/Alban1911/Rose/total?color=32A832&label=Downloads)](https://github.com/Alban1911/Rose/releases/latest)
+[![Installer](https://img.shields.io/badge/Installer-Windows-32A832)](https://github.com/shazeus/Rose/releases/latest) [![Fork](https://img.shields.io/badge/Fork-shazeus-32A832)](https://github.com/shazeus/Rose) [![Ko-Fi](https://img.shields.io/badge/KoFi-Donate-C03030?logo=ko-fi&logoColor=white)](https://ko-fi.com/roseapp) [![Discord](https://img.shields.io/discord/1490473857075642621?color=32A832&logo=discord&logoColor=white&label=Discord)](https://discord.com/invite/roseskins) [![License](https://img.shields.io/badge/License-MIT-C03030)](LICENSE) [![Downloads](https://img.shields.io/github/downloads/shazeus/Rose/total?color=32A832&label=Fork%20Downloads)](https://github.com/shazeus/Rose/releases/latest)
 
 
 </div>
@@ -12,6 +12,8 @@
 ---
 
 ## Overview
+
+This fork is maintained under **shazeus/Rose** for fork-specific packaging, notes, and UI link customization while keeping the upstream runtime flow intact.
 
 Rose is an open-source automatic skin changer for League of Legends that enables seamless access to all skins in the game. The application runs silently in the system tray and automatically detects skin selections during champion select, injecting the chosen skin when the game loads.
 
@@ -79,7 +81,7 @@ On first launch, Rose will prompt you to provide this file and open the folder w
 
 ## Installation
 
-1. Download the latest installer from [Releases](https://github.com/Alban1911/Rose/releases/latest)
+1. Download the latest fork installer from [Releases](https://github.com/shazeus/Rose/releases/latest)
 2. Run the installer as Administrator
 3. Launch Rose from the Start Menu or desktop shortcut
 

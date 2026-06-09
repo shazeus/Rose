@@ -8,7 +8,7 @@
   const LOG_PREFIX = "[Rose-SettingsPanel]";
   const DISCORD_INVITE_URL = "https://discord.gg/roseapp";
   const KOFI_URL = "https://ko-fi.com/roseapp";
-  const GITHUB_URL = "https://github.com/Alban1911/Rose";
+  const GITHUB_URL = "https://github.com/shazeus/Rose";
 
   const PANEL_ID = "rose-settings-panel";
   const FLYOUT_ID = "rose-settings-flyout";
