@@ -5,11 +5,23 @@ Handles GitHub API interactions for release checking
 
 from __future__ import annotations
 
+import os
 from typing import Optional
 
 import requests
 
-GITHUB_RELEASE_API = "https://api.github.com/repos/Alban1911/Rose/releases/latest"
+DEFAULT_RELEASE_REPO = "shazeus/Rose"
+GITHUB_RELEASE_API = f"https://api.github.com/repos/{DEFAULT_RELEASE_REPO}/releases/latest"
+
+
+def get_release_api_url() -> str:
+    """Return the release API URL for this fork's updater."""
+    explicit_api = os.environ.get("ROSE_RELEASE_API")
+    if explicit_api:
+        return explicit_api
+
+    release_repo = os.environ.get("ROSE_RELEASE_REPO", DEFAULT_RELEASE_REPO).strip()
+    return f"https://api.github.com/repos/{release_repo}/releases/latest"
 
 
 class GitHubClient:
@@ -25,7 +37,7 @@ class GitHubClient:
             Release data dictionary or None if failed
         """
         try:
-            response = requests.get(GITHUB_RELEASE_API, timeout=self.timeout)
+            response = requests.get(get_release_api_url(), timeout=self.timeout)
             response.raise_for_status()
             return response.json()
         except Exception:
@@ -44,4 +56,3 @@ class GitHubClient:
         """Get the hash file asset from release data"""
         assets = release.get("assets", [])
         return next((a for a in assets if a.get("name", "").lower() == "hashes.game.txt"), None)
-

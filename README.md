@@ -1,107 +1,140 @@
-# 🌹 Rose - Effortless Skin Changer for LoL
+# Rose - League of Legends için Zahmetsiz Skin Yönetimi
 
 <div align="center">
 
   <img src="./assets/icon.png" alt="Rose Icon" width="128" height="128">
 
-[![Installer](https://img.shields.io/badge/Installer-Windows-32A832)](https://github.com/shazeus/Rose/releases/latest) [![Fork](https://img.shields.io/badge/Fork-shazeus-32A832)](https://github.com/shazeus/Rose) [![Ko-Fi](https://img.shields.io/badge/KoFi-Donate-C03030?logo=ko-fi&logoColor=white)](https://ko-fi.com/roseapp) [![Discord](https://img.shields.io/discord/1490473857075642621?color=32A832&logo=discord&logoColor=white&label=Discord)](https://discord.com/invite/roseskins) [![License](https://img.shields.io/badge/License-MIT-C03030)](LICENSE) [![Downloads](https://img.shields.io/github/downloads/shazeus/Rose/total?color=32A832&label=Fork%20Downloads)](https://github.com/shazeus/Rose/releases/latest)
-
+[![Installer](https://img.shields.io/badge/Installer-Windows-32A832)](https://github.com/shazeus/Rose/releases/latest) [![Fork](https://img.shields.io/badge/Fork-shazeus-32A832)](https://github.com/shazeus/Rose) [![Ko-Fi](https://img.shields.io/badge/KoFi-Donate-C03030?logo=ko-fi&logoColor=white)](https://ko-fi.com/roseapp) [![Discord](https://img.shields.io/discord/1490473857075642621?color=32A832&logo=discord&logoColor=white&label=Discord)](https://discord.com/invite/roseskins) [![Lisans](https://img.shields.io/badge/Lisans-MIT-C03030)](LICENSE) [![İndirmeler](https://img.shields.io/github/downloads/shazeus/Rose/total?color=32A832&label=Fork%20Indirmeleri)](https://github.com/shazeus/Rose/releases/latest)
 
 </div>
 
 ---
 
-## Overview
+## Genel Bakış
 
-This fork is maintained under **shazeus/Rose** for fork-specific packaging, notes, and UI link customization while keeping the upstream runtime flow intact.
+Bu depo, **shazeus/Rose** forkudur. Forkun amacı Rose'un mevcut çalışma akışını korurken paketleme, görünen proje linkleri, fork notları ve güncelleme kaynağı gibi fork sahibine ait kısımları temiz hale getirmektir.
 
-Rose is an open-source automatic skin changer for League of Legends that enables seamless access to all skins in the game. The application runs silently in the system tray and automatically detects skin selections during champion select, injecting the chosen skin when the game loads.
+Rose, League of Legends için açık kaynaklı bir skin yönetim aracıdır. Uygulama sistem tepsisinde çalışır, şampiyon seçimi sırasında seçilen skinleri takip eder ve oyun yüklenirken yerel görüntü varlıklarını uygular.
 
-Built on the [Pengu Loader](https://github.com/Tariolle/ROSE-Pengu) framework, Rose integrates JavaScript extensions into the League Client to enable modular UI interactions. It strictly modifies local rendering variables to display custom models and textures. It is designed purely as an exploration of client-side asset management, providing no manipulation of network data, memory states, or gameplay mechanics, thereby **offering zero competitive advantage**.
+Rose, [Pengu Loader](https://github.com/Tariolle/ROSE-Pengu) altyapısını kullanarak League Client içine JavaScript eklentileri entegre eder. Proje yerel model/doku görünüm değişkenleriyle çalışır; ağ verisini, bellek durumunu veya oynanış mekaniklerini manipüle etmeyi hedeflemez ve rekabet avantajı sunmaz.
 
-## Architecture
+## Bu Forkta Yapılan Geliştirmeler
 
-Rose consists of three main components:
+- README, fork kullanıcıları için Türkçe ve daha açık hale getirildi.
+- README, installer metadata ve League Client içindeki SettingsPanel GitHub linkleri `shazeus/Rose` forkuna yönlendirildi.
+- [FORK_NOTES.md](FORK_NOTES.md) eklendi; forkta hangi alanların özelleştirildiği ve runtime akışa dokunulmadığı ayrıca belgelendi.
+- Launcher updater artık varsayılan olarak `shazeus/Rose` release'lerini kontrol eder.
+- Özel build ve test senaryoları için updater release kaynağı `ROSE_RELEASE_REPO` veya `ROSE_RELEASE_API` ortam değişkenleriyle değiştirilebilir.
+- Updater release kaynağı için küçük regresyon testleri eklendi.
+
+## Mimari
+
+Rose üç ana parçadan oluşur:
 
 ### Python Backend
 
-- **LCU API Integration**: Communicates with the League Client via the League Client Update (LCU) API
-- **Skin Injection**: Handles skin injection compatible with Riot Vanguard
-- **WebSocket Bridge**: Operates a WebSocket server for real-time communication with frontend plugins
-- **Skin Management**: Downloads and manages skin files from the [LeagueSkins repository](https://github.com/Alban1911/LeagueSkins)
-- **Party Mode**: Enables skin sharing between friends in the same lobby via a Cloudflare WebSocket relay
-- **Game Monitoring**: Tracks game state, champion select phases, and loadout countdowns
-- **Auto-Updater**: Checks GitHub for new releases and prompts users to install updates
-- **Analytics**: Sends periodic pings to track unique users (configurable, runs in background thread)
+- **LCU API Entegrasyonu**: League Client Update (LCU) API ile iletişim kurar.
+- **Skin Uygulama Akışı**: Riot Vanguard ile uyumlu olacak şekilde skin uygulama sürecini yönetir.
+- **WebSocket Köprüsü**: Frontend eklentileriyle anlık iletişim kurmak için WebSocket sunucusu çalıştırır.
+- **Skin Yönetimi**: Skin dosyalarını [LeagueSkins deposundan](https://github.com/Alban1911/LeagueSkins) indirir ve düzenler.
+- **Party Mode**: Aynı lobideki arkadaşlar arasında skin seçimlerini Cloudflare WebSocket relay üzerinden paylaşır.
+- **Oyun İzleme**: Oyun durumunu, şampiyon seçimi fazlarını ve loadout geri sayımını takip eder.
+- **Otomatik Güncelleyici**: GitHub release'lerini kontrol eder ve uygun güncellemeyi kullanıcıya sunar.
+- **Analitik**: Yapılandırılabilir arka plan pingleriyle benzersiz kullanıcı sayımını takip eder.
 
 ### Cloudflare Workers
 
-- **rose-party-relay**: Durable Object-backed WebSocket relay that manages party rooms (max 10 members per room) for real-time skin selection broadcasting between friends
-### Pengu Loader Plugins
+- **rose-party-relay**: Party odalarını yöneten Durable Object tabanlı WebSocket relay servisidir. Oda başına en fazla 10 üyeyi destekler.
 
-Rose includes a suite of JavaScript plugins that extend the League Client UI:
+### Pengu Loader Eklentileri
 
-- **ROSE-UI**: Unlocks locked skin previews in champion select, enabling hover interactions on all skins
-- **ROSE-SkinMonitor**: Monitors currently selected skin's name and sends it to the Python backend via WebSocket
-- **ROSE-CustomWheel**: Displays custom mod metadata for hovered skins and exposes quick access to the mods folder
-- **ROSE-ChromaWheel**: Enhanced chroma selection interface for choosing any chroma variant
-- **ROSE-FormsWheel**: Custom form selection interface for skins with multiple forms (Elementalist Lux, Sahn Uzal Mordekaiser, Spirit Blossom Morgana, Radiant Sett)
-- **ROSE-SettingsPanel**: Settings panel accessible from the League of Legends Client
-- **ROSE-RandomSkin**: Random skin selection feature
-- **ROSE-HistoricMode**: Access to the last used skin for every champion
-- **ROSE-PartyMode**: Party mode UI — displays a panel in lobby and champion select to enable skin sharing, view connected peers, and see friends' skin selections in real time
-- **ROSE-Jade**: Client customization — regalia borders, backgrounds, banners, icons, titles, and win/loss stats
+- **ROSE-UI**: Şampiyon seçimindeki kilitli skin önizlemelerini açarak hover etkileşimlerini etkinleştirir.
+- **ROSE-SkinMonitor**: Seçili skin adını takip eder ve Python backend'e WebSocket ile iletir.
+- **ROSE-CustomWheel**: Hover edilen skinler için mod metadata bilgisini gösterir ve mods klasörüne hızlı erişim sağlar.
+- **ROSE-ChromaWheel**: Her chroma varyantını seçmek için gelişmiş chroma arayüzü sunar.
+- **ROSE-FormsWheel**: Birden fazla forma sahip skinler için özel form seçim arayüzü sağlar.
+- **ROSE-SettingsPanel**: League Client içinden erişilebilen Rose ayar panelidir.
+- **ROSE-RandomSkin**: Rastgele skin seçimi özelliğini sağlar.
+- **ROSE-HistoricMode**: Her şampiyon için son kullanılan skine hızlı erişim verir.
+- **ROSE-PartyMode**: Lobi ve şampiyon seçiminde skin paylaşımı, bağlı kişiler ve arkadaş seçimlerini gösteren paneli sağlar.
+- **ROSE-Jade**: Client için border, arka plan, banner, ikon, unvan ve win/loss görünüm özelleştirmeleri sunar.
 
-## How It Works
+## Nasıl Çalışır?
 
-1. **League Client Integration**: Rose activates **[Pengu Loader](https://github.com/Tariolle/ROSE-Pengu)** on startup, which injects the JavaScript plugins into the League Client
-2. **Skin Detection**: When you hover over a skin in champion select, `ROSE-SkinMonitor` detects the selection and sends it to the Python backend
-3. **Game Opening Delay**: To make sure the injection has time to occur we suspend League of Legend's game process as long as the overlay is not ran
-4. **Game Injection**: Rose injects the selected skin when the game starts
-5. **Seamless Experience**: The skin loads as if you owned it, with full chroma support and no gameplay impact (Rose will **never** provide any competitive advantage to its users)
+1. Rose açılış sırasında **[Pengu Loader](https://github.com/Tariolle/ROSE-Pengu)** entegrasyonunu başlatır.
+2. `ROSE-SkinMonitor`, şampiyon seçiminde hover edilen skin bilgisini algılar.
+3. Python backend, gelen seçimi ve oyun fazını takip eder.
+4. Oyun yüklenirken seçilen skinin yerel varlıkları uygulanır.
+5. Skin yalnızca yerel görünüm olarak yüklenir; oynanış etkilenmez.
 
-## Features
+## Özellikler
 
-- **Smart Injection**: Never injects skins you already own
-- **Multi-Language Support**: Works with any client language
-- **Open Source**: Fully open source and extensible
-- **Free**: If you bought this software, you got scammed 💀
+- **Akıllı Uygulama**: Zaten sahip olunan skinleri gereksiz yere uygulamamaya çalışır.
+- **Çoklu Dil Desteği**: Farklı League Client dilleriyle çalışacak şekilde tasarlanmıştır.
+- **Modüler Plugin Yapısı**: UI ve istemci davranışları Pengu Loader eklentileriyle ayrılmıştır.
+- **Fork Dostu Güncelleme**: Bu fork, güncellemeleri `shazeus/Rose` release'lerinden kontrol eder.
+- **Test Edilebilir Release Kaynağı**: `ROSE_RELEASE_REPO=owner/repo` veya `ROSE_RELEASE_API=https://...` ile updater hedefi değiştirilebilir.
+- **Açık Kaynak**: Kod okunabilir, incelenebilir ve fork üzerinden geliştirilebilir.
 
-## Requirements
+## Gereksinimler
 
 - **Windows 10/11**
-- **League of Legends** installed
-- **Injection DLL** - You must provide your own signed DLL (see below)
+- **League of Legends** kurulu olmalıdır.
+- **Injection DLL**: Kullanıcının kendi imzalı DLL dosyasını sağlaması gerekir.
 
-### DLL Requirement
+### DLL Gereksinimi
 
-Due to DMCA restrictions, Rose cannot distribute the injection DLL file. You must obtain this file yourself from an authorized source and sign it with your own code signing certificate.
+DMCA kısıtlamaları nedeniyle Rose injection DLL dosyasını dağıtmaz. Kullanıcı bu dosyayı yetkili bir kaynaktan edinmeli ve kendi kod imzalama sertifikası ile imzalamalıdır.
 
-On first launch, Rose will prompt you to provide this file and open the folder where it should be placed.
+İlk açılışta Rose gerekli klasörü açar ve kullanıcıdan ilgili dosyayı yerleştirmesini ister.
 
-## Installation
+## Kurulum
 
-1. Download the latest fork installer from [Releases](https://github.com/shazeus/Rose/releases/latest)
-2. Run the installer as Administrator
-3. Launch Rose from the Start Menu or desktop shortcut
+1. En güncel fork installer dosyasını [Releases](https://github.com/shazeus/Rose/releases/latest) sayfasından indirin.
+2. Installer'ı Yönetici olarak çalıştırın.
+3. Rose'u Başlat Menüsü veya masaüstü kısayolundan açın.
 
-## Contributing
+## Fork Ayarları
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and project structure.
+Updater varsayılan olarak bu fork release'lerini kullanır:
 
-## Legal Disclaimer
+```powershell
+https://github.com/shazeus/Rose/releases/latest
+```
 
-This project is not endorsed by or affiliated with Riot Games. Riot Games and all related properties are trademarks or registered trademarks of Riot Games, Inc.
+Test veya özel build için kaynak değiştirme:
 
-Custom skins are allowed under Riot's terms of service and are not detected. Do not discuss or advertise skin tools in game. Users proceed at their own risk.
+```powershell
+$env:ROSE_RELEASE_REPO = "kullanici/Rose"
+```
 
-## Support
+Tam API URL'i vermek için:
 
-If you enjoy Rose and want to support its development:
+```powershell
+$env:ROSE_RELEASE_API = "https://api.github.com/repos/kullanici/Rose/releases/latest"
+```
+
+## Katkı
+
+Geliştirme kurulumu ve proje yapısı için [CONTRIBUTING.md](CONTRIBUTING.md) dosyasına bakın.
+
+Fork üzerinde çalışırken:
+
+- Runtime injection akışını değiştiren commitleri ayrı tutun.
+- Upstream ile karşılaştırması kolay, küçük ve net commitler tercih edin.
+- League Client entegrasyonuna dokunmadan önce upstream değişikliklerini kontrol edin.
+
+## Yasal Uyarı
+
+Bu proje Riot Games tarafından desteklenmez ve Riot Games ile resmi bir bağlantısı yoktur. Riot Games ve ilgili tüm markalar Riot Games, Inc. şirketinin ticari markaları veya tescilli markalarıdır.
+
+Custom skin kullanımında sorumluluk kullanıcıya aittir. Oyun içinde skin araçlarını tartışmayın veya reklamını yapmayın.
+
+## Destek
+
+Upstream Rose topluluğunu desteklemek isterseniz:
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/roseapp)
-
-Your support helps keep the project alive and motivates continued development!
 
 ---
 
