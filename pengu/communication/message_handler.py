@@ -208,6 +208,12 @@ class MessageHandler:
             self._handle_party_remove_peer(payload)
         elif payload_type == "party-get-state":
             self._handle_party_get_state(payload)
+        elif payload_type == "presets-request":
+            self._handle_presets_request(payload)
+        elif payload_type == "preset-save":
+            self._handle_preset_save(payload)
+        elif payload_type == "preset-delete":
+            self._handle_preset_delete(payload)
         elif payload.get("skin"):
             # Handle skin detection message
             self._handle_skin_detection(payload)
@@ -390,7 +396,7 @@ class MessageHandler:
             log.error(f"[SkinMonitor] Failed to handle settings request: {e}")
 
     def _handle_diagnostics_clear(self, payload: dict) -> None:
-        """Clear rose_diagnostics.txt (Diagnostics)"""
+        """Clear aurelia_diagnostics.txt (Diagnostics)"""
         try:
             ok = clear_issues()
             response_payload = {
@@ -407,7 +413,7 @@ class MessageHandler:
 
     def _handle_diagnostics_clear_category(self, payload: dict) -> None:
         """
-        Clear only a diagnostics category from rose_diagnostics.txt.
+        Clear only a diagnostics category from aurelia_diagnostics.txt.
         Categories:
           - injection_threshold
           - monitor_timeout
@@ -496,11 +502,11 @@ class MessageHandler:
                 pass
 
     def _clear_issues_categories(self, categories: set[str]) -> bool:
-        """Remove matching diagnostics entries from rose_diagnostics.txt (best-effort)."""
+        """Remove matching diagnostics entries from aurelia_diagnostics.txt (best-effort)."""
         try:
             if not categories:
                 return False
-            p = get_user_data_dir() / "rose_diagnostics.txt"
+            p = get_user_data_dir() / "aurelia_diagnostics.txt"
             if not p.exists():
                 return True
 
@@ -549,7 +555,7 @@ class MessageHandler:
 
     def _handle_diagnostics_request(self, payload: dict) -> None:
         """
-        Return a compact, user-friendly list of recent errors, derived from rose_diagnostics.txt.
+        Return a compact, user-friendly list of recent errors, derived from aurelia_diagnostics.txt.
         Also includes base skin confirmation stats from the tracker.
         The goal is "what to change" rather than raw logs.
         """
@@ -567,7 +573,7 @@ class MessageHandler:
             response_payload = {
                 "type": "diagnostics-data",
                 "errors": out,
-                "path": str(get_user_data_dir() / "rose_diagnostics.txt"),
+                "path": str(get_user_data_dir() / "aurelia_diagnostics.txt"),
                 "baseSkinStats": tracker_stats,
             }
             self._send_response(json.dumps(response_payload))
@@ -579,7 +585,7 @@ class MessageHandler:
                 pass
 
     def _compute_diagnostics_errors(self) -> list[dict]:
-        """Compute compact diagnostics error list from rose_diagnostics.txt (never raises)."""
+        """Compute compact diagnostics error list from aurelia_diagnostics.txt (never raises)."""
         try:
             raw_lines = read_issues_tail(max_lines=400)
             now = datetime.now()
@@ -1672,7 +1678,7 @@ class MessageHandler:
             log.debug(f"[SkinMonitor] Traceback: {traceback.format_exc()}")
 
     def _handle_request_category_mods(self, payload: dict) -> None:
-        """Return the list of mods for a specific top-level category under %LOCALAPPDATA%\\Rose\\mods."""
+        """Return the list of mods for a specific top-level category under %LOCALAPPDATA%\\Aurelia\\mods."""
         if not self.mod_storage:
             return
 
@@ -2436,3 +2442,79 @@ class MessageHandler:
 
         except Exception as e:
             log.error(f"[PARTY] Error getting party state: {e}")
+
+    def _handle_presets_request(self, payload: dict) -> None:
+        """Handle presets request for a champion"""
+        champion_id = payload.get("championId")
+        if not champion_id:
+            return
+
+        presets = self.shared_state.presets.get(str(champion_id), {})
+        response_payload = {
+            "type": "presets-data",
+            "championId": champion_id,
+            "presets": presets,
+        }
+        self._send_response(json.dumps(response_payload))
+
+    def _handle_preset_save(self, payload: dict) -> None:
+        """Save a new skin preset"""
+        champion_id = payload.get("championId")
+        preset_name = payload.get("name", "Default")
+        skin_id = payload.get("skinId")
+        chroma_id = payload.get("chromaId")
+        form_path = payload.get("formPath")
+
+        if not champion_id or skin_id is None:
+            return
+
+        if str(champion_id) not in self.shared_state.presets:
+            self.shared_state.presets[str(champion_id)] = {}
+
+        self.shared_state.presets[str(champion_id)][preset_name] = {
+            "skinId": skin_id,
+            "chromaId": chroma_id,
+            "formPath": form_path,
+        }
+
+        # Persist to config.ini
+        self._save_presets_to_config()
+
+        response_payload = {
+            "type": "preset-saved",
+            "success": True,
+            "championId": champion_id,
+            "name": preset_name,
+        }
+        self._send_response(json.dumps(response_payload))
+        log.info(f"[Presets] Saved preset '{preset_name}' for champion {champion_id}")
+
+    def _handle_preset_delete(self, payload: dict) -> None:
+        """Delete a skin preset"""
+        champion_id = payload.get("championId")
+        preset_name = payload.get("name")
+
+        if not champion_id or not preset_name:
+            return
+
+        if str(champion_id) in self.shared_state.presets:
+            if preset_name in self.shared_state.presets[str(champion_id)]:
+                del self.shared_state.presets[str(champion_id)][preset_name]
+                self._save_presets_to_config()
+
+                response_payload = {
+                    "type": "preset-deleted",
+                    "success": True,
+                    "championId": champion_id,
+                    "name": preset_name,
+                }
+                self._send_response(json.dumps(response_payload))
+                log.info(f"[Presets] Deleted preset '{preset_name}' for champion {champion_id}")
+
+    def _save_presets_to_config(self) -> None:
+        """Persist presets to config.ini"""
+        try:
+            presets_json = json.dumps(self.shared_state.presets)
+            set_config_option("General", "skin_presets", presets_json)
+        except Exception as e:
+            log.error(f"[Presets] Failed to save presets to config: {e}")

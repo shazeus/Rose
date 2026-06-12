@@ -103,15 +103,24 @@ class GameDetector:
                             else:
                                 log.debug(f"League not found at expected location: {league_exe}")
                                 
-                                # Try parent directory structure (for different installers)
-                                parent_dir = client_dir.parent
-                                parent_league_dir = parent_dir / "League of Legends" / "Game"
-                                parent_league_exe = parent_league_dir / "League of Legends.exe"
-                                
-                                log.debug(f"Trying parent directory structure: {parent_league_exe}")
-                                if parent_league_exe.exists():
-                                    log_success(log, f"Found League via parent directory: game={parent_league_dir}, client={client_dir}", "")
-                                    return parent_league_dir, client_dir
+                                # Check common relative paths
+                                common_rel_paths = [
+                                    client_dir.parent / "League of Legends" / "Game",
+                                    client_dir.parent / "Game",
+                                    Path("C:/Riot Games/League of Legends/Game"),
+                                    Path("D:/Riot Games/League of Legends/Game"),
+                                    Path("E:/Riot Games/League of Legends/Game"),
+                                    Path("G:/Riot Games/League of Legends/Game"),
+                                    Path("D:/Games/League of Legends/Game"),
+                                    Path("E:/Games/League of Legends/Game"),
+                                ]
+
+                                for candidate_dir in common_rel_paths:
+                                    candidate_exe = candidate_dir / "League of Legends.exe"
+                                    log.debug(f"Trying common location: {candidate_exe}")
+                                    if candidate_exe.exists():
+                                        log_success(log, f"Found League via common path: game={candidate_dir}, client={client_dir}", "")
+                                        return candidate_dir, client_dir
                                 
                 except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                     continue

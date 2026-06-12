@@ -87,7 +87,7 @@ class InjectionSettingsWindow(Win32Window):
 
     def __init__(self, initial_threshold: float) -> None:
         super().__init__(
-            class_name="RoseSettingsDialog",
+            class_name="AureliaSettingsDialog",
             window_title="Settings",
             width=360,
             height=380,
@@ -524,7 +524,7 @@ def show_injection_settings_dialog() -> None:
                 if not is_admin():
                     msg = (
                         "Administrator privileges are required to enable auto-start.\n\n"
-                        "Please restart Rose with Administrator rights and try again."
+                        "Please restart Aurelia with Administrator rights and try again."
                     )
                     show_message_box_threaded(msg, "Auto-Start", MB_ICONERROR)
                     log.warning("[TraySettings] Auto-start enable blocked - not running as administrator")
@@ -544,7 +544,7 @@ def show_injection_settings_dialog() -> None:
                 if not is_admin():
                     msg = (
                         "Administrator privileges are required to disable auto-start.\n\n"
-                        "Please restart Rose with Administrator rights and try again."
+                        "Please restart Aurelia with Administrator rights and try again."
                     )
                     show_message_box_threaded(msg, "Auto-Start", MB_ICONERROR)
                     log.warning("[TraySettings] Auto-start disable blocked - not running as administrator")

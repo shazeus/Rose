@@ -40,7 +40,25 @@ def initialize_core_components(args, injection_threshold: Optional[float] = None
     # Initialize core components with error handling
     try:
         log.info("Initializing LCU client...")
-        lcu = LCU(args.lockfile)
+        # Add a retry loop for LCU initialization
+        import time
+        lcu = None
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                lcu = LCU(args.lockfile)
+                if lcu:
+                    break
+            except Exception as e:
+                if attempt < max_retries - 1:
+                    log.warning(f"LCU initialization attempt {attempt + 1} failed: {e}. Retrying in 1s...")
+                    time.sleep(1)
+                else:
+                    raise e
+
+        if not lcu:
+            raise RuntimeError("LCU initialization returned None after retries")
+
         log.info("LCU client initialized")
 
         log.info("Initializing skin scraper...")
@@ -49,6 +67,16 @@ def initialize_core_components(args, injection_threshold: Optional[float] = None
         
         log.info("Initializing shared state...")
         state = SharedState()
+        # Load presets from config.ini
+        import json
+        from config import get_config_option
+        presets_json = get_config_option("General", "skin_presets", "{}")
+        try:
+            state.presets = json.loads(presets_json)
+            log.info(f"Loaded {len(state.presets)} champion presets")
+        except Exception as e:
+            log.warning(f"Failed to load presets: {e}")
+            state.presets = {}
         log.info("Shared state initialized")
     except Exception as e:
         log.error("=" * 80)
@@ -65,8 +93,8 @@ def initialize_core_components(args, injection_threshold: Optional[float] = None
             try:
                 ctypes.windll.user32.MessageBoxW(
                     0,
-                    f"Rose failed to initialize:\n\n{str(e)}\n\nCheck the log file for details:\n{log.handlers[0].baseFilename if log.handlers else 'N/A'}",
-                    "Rose - Initialization Error",
+                    f"Aurelia failed to initialize:\n\n{str(e)}\n\nCheck the log file for details:\n{log.handlers[0].baseFilename if log.handlers else 'N/A'}",
+                    "Aurelia - Initialization Error",
                     0x50010  # MB_OK | MB_ICONERROR | MB_SETFOREGROUND | MB_TOPMOST
                 )
             except Exception:
@@ -105,8 +133,8 @@ def initialize_core_components(args, injection_threshold: Optional[float] = None
             try:
                 ctypes.windll.user32.MessageBoxW(
                     0,
-                    f"Rose failed to initialize injection system:\n\n{str(e)}\n\nCheck the log file for details:\n{log.handlers[0].baseFilename if log.handlers else 'N/A'}",
-                    "Rose - Injection Error",
+                    f"Aurelia failed to initialize injection system:\n\n{str(e)}\n\nCheck the log file for details:\n{log.handlers[0].baseFilename if log.handlers else 'N/A'}",
+                    "Aurelia - Injection Error",
                     0x50010  # MB_OK | MB_ICONERROR | MB_SETFOREGROUND | MB_TOPMOST
                 )
             except Exception:

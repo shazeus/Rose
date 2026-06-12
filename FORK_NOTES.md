@@ -1,13 +1,13 @@
-# Shazeus Rose Fork Notes
+# Aurelia Fork Notes
 
-This fork keeps Rose's upstream runtime behavior intact and only carries fork-local packaging, documentation, and visible project-link customization.
+This fork keeps Aurelia's upstream runtime behavior intact and only carries fork-local packaging, documentation, and visible project-link customization.
 
 ## Fork-Specific Changes
 
-- GitHub-facing links in the README, installer metadata, plugin metadata, and in-client settings panel point to `shazeus/Rose`.
-- The launcher updater now checks `shazeus/Rose` releases by default.
-- League Client UI surfaces now show the Shazeus Rose identity in SettingsPanel, ChromaWheel, FormsWheel, Party Mode, and tray/update titles where safe.
-- The updater release source can be overridden with `ROSE_RELEASE_REPO` or `ROSE_RELEASE_API` for testing/custom builds.
+- GitHub-facing links in the README, installer metadata, plugin metadata, and in-client settings panel point to `aurelia/Aurelia`.
+- The launcher updater now checks `aurelia/Aurelia` releases by default.
+- League Client UI surfaces now show the Aurelia identity in SettingsPanel, ChromaWheel, FormsWheel, Party Mode, and tray/update titles where safe.
+- The updater release source can be overridden with `AURELIA_RELEASE_REPO` or `AURELIA_RELEASE_API` for testing/custom builds.
 - Upstream support/community links are left unchanged unless this fork starts maintaining its own support channel.
 - Runtime injection, loader, and asset-processing behavior are intentionally untouched by this fork customization pass.
 

@@ -1,5 +1,5 @@
 """
-Native Win32 startup dialog used to prepare Rose before launching.
+Native Win32 startup dialog used to prepare Aurelia before launching.
 
 This replaces the former PyQt-based launcher with a lightweight Steam-style
 progress window that:
@@ -152,7 +152,7 @@ def run_launcher(dev_mode: bool = False, test_download_fail: bool = False) -> No
                 skin_sequence.perform_skin_sync(dialog, test_fail=test_download_fail)
 
                 dialog.set_detail("All checks complete.")
-                dialog.set_status("Launching Rose…")
+                dialog.set_status("Launching Aurelia…")
                 dialog.set_progress(100)
                 dialog.pump_messages()
                 time.sleep(0.4)
@@ -163,7 +163,7 @@ def run_launcher(dev_mode: bool = False, test_download_fail: bool = False) -> No
             except Exception as exc:  # noqa: BLE001
                 result["error"] = exc
                 log.error(f"Launcher error: {exc}", exc_info=True)
-                _show_error(f"Failed to prepare Rose:\n\n{exc}")
+                _show_error(f"Failed to prepare Aurelia:\n\n{exc}")
                 updater_log.exception("Launcher sequence crashed", exc_info=True)
             finally:
                 dialog.allow_close()
