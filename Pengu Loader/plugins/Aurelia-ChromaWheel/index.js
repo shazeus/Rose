@@ -2,7 +2,7 @@
  * @name Aurelia-ChromaWheel
  * @author aurelia
  * @description Chroma wheel for Pengu Loader
- * @link https://github.com/aurelia/Aurelia
+ * @link https://github.com/shazeus/Aurelia
  */
 (function createFakeChromaButton() {
   const LOG_PREFIX = "[LU-ChromaButton]";

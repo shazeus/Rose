@@ -2,7 +2,7 @@
  * @name Aurelia-PartyMode
  * @author aurelia
  * @description Party Mode - See your friends' skins in game via P2P
- * @link https://github.com/aurelia/Aurelia
+ * @link https://github.com/shazeus/Aurelia
  */
 (function initPartyMode() {
   const LOG_PREFIX = "[Aurelia-PartyMode]";

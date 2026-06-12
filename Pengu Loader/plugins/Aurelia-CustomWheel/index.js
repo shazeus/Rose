@@ -2,7 +2,7 @@
  * @name AURELIA-CustomWheel
  * @author aurelia
  * @description Custom mod wheel for Pengu Loader - displays installed mods for hovered skins
- * @link https://github.com/aurelia/Aurelia
+ * @link https://github.com/shazeus/Aurelia
  */
 (function createCustomWheel() {
   const LOG_PREFIX = "[AURELIA-CustomWheel]";

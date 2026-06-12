@@ -13,8 +13,8 @@ def test_release_api_defaults_to_aurelia_fork(monkeypatch):
     monkeypatch.delenv("AURELIA_RELEASE_API", raising=False)
     monkeypatch.delenv("AURELIA_RELEASE_REPO", raising=False)
 
-    assert github_client.GITHUB_RELEASE_API == "https://api.github.com/repos/aurelia/Aurelia/releases/latest"
-    assert github_client.get_release_api_url() == "https://api.github.com/repos/aurelia/Aurelia/releases/latest"
+    assert github_client.GITHUB_RELEASE_API == "https://api.github.com/repos/shazeus/Aurelia/releases/latest"
+    assert github_client.get_release_api_url() == "https://api.github.com/repos/shazeus/Aurelia/releases/latest"
 
 
 def test_release_api_accepts_repo_override(monkeypatch):

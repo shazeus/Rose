@@ -2,7 +2,7 @@
  * @name AURELIA-HistoricMode
  * @author aurelia
  * @description Historic mode for Pengu Loader
- * @link https://github.com/aurelia/Aurelia
+ * @link https://github.com/shazeus/Aurelia
  */
 (function initHistoricMode() {
   const LOG_PREFIX = "[AURELIA-HistoricMode]";

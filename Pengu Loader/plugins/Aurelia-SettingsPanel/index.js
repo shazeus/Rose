@@ -2,14 +2,14 @@
  * @name Aurelia-SettingsPanel
  * @author aurelia
  * @description Settings panel for Aurelia
- * @link https://github.com/aurelia/Aurelia
+ * @link https://github.com/shazeus/Aurelia
  */
 (function initSettingsPanel() {
   const LOG_PREFIX = "[Aurelia-SettingsPanel]";
   const DISPLAY_NAME = "Aurelia";
   const DISCORD_INVITE_URL = "https://discord.gg/aureliaapp";
   const KOFI_URL = "https://ko-fi.com/aureliaapp";
-  const GITHUB_URL = "https://github.com/aurelia/Aurelia";
+  const GITHUB_URL = "https://github.com/shazeus/Aurelia";
 
   const PANEL_ID = "aurelia-settings-panel";
   const FLYOUT_ID = "aurelia-settings-flyout";

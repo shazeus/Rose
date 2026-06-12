@@ -2,7 +2,7 @@
  * @name Aurelia-SkinMonitor
  * @author aurelia
  * @description Skin monitor for Pengu Loader
- * @link https://github.com/aurelia/Aurelia
+ * @link https://github.com/shazeus/Aurelia
  */
 
 console.log("[SkinMonitor] Plugin loaded");

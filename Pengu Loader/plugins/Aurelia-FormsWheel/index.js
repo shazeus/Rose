@@ -2,7 +2,7 @@
  * @name AURELIA-FormsWheel
  * @author aurelia
  * @description Aurelia forms wheel with asset-based buttons
- * @link https://github.com/aurelia/Aurelia
+ * @link https://github.com/shazeus/Aurelia
  */
 (function createFormsWheel() {
   const LOG_PREFIX = "[FormsWheel]";

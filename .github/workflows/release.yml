@@ -1,0 +1,61 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  windows-release:
+    name: Windows release
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install Inno Setup
+        shell: pwsh
+        run: choco install innosetup --no-progress -y
+
+      - name: Install Python dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Build executable and installer
+        run: python build_all.py
+
+      - name: Package release assets
+        shell: pwsh
+        run: |
+          $version = "${{ github.ref_name }}".TrimStart("v")
+          python scripts/package_release.py $version
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          body: |
+            Aurelia ${{ github.ref_name }}
+
+            - Refreshed the Aurelia branding and app logo.
+            - Published Windows installer and updater package.
+            - Installer asset follows the Rose release style.
+
+            Assets:
+            - `Aurelia_Setup_${{ github.ref_name }}.exe`
+            - `update_package_${{ github.ref_name }}.zip`
+          files: release/*
+          draft: false
+          prerelease: false

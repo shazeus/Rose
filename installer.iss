@@ -2,10 +2,10 @@
 ; This creates a proper Windows installer that registers the app
 
 #define MyAppName "Aurelia"
-#define MyAppVersion "1.2.9"
-#define MyAppVersionInfo "1.2.9.0"
-#define MyAppPublisher "Aurelia Team"
-#define MyAppURL "https://github.com/aurelia/Aurelia"
+#define MyAppVersion "1.3.0"
+#define MyAppVersionInfo "1.3.0.0"
+#define MyAppPublisher "Shazeus"
+#define MyAppURL "https://github.com/shazeus/Aurelia"
 #define MyAppExeName "Aurelia.exe"
 #define MyAppDescription "Aurelia - League of Legends skin management"
 ; Must match config.SINGLE_INSTANCE_MUTEX_NAME (used by the app to enforce single-instance)
@@ -26,7 +26,7 @@ DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputDir=installer
-OutputBaseFilename=Aurelia_Setup
+OutputBaseFilename=Aurelia_Setup_{#MyAppVersion}
 SetupIconFile=assets\icon.ico
 Compression=lzma
 SolidCompression=yes

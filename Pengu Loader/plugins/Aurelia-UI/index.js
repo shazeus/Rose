@@ -2,7 +2,7 @@
  * @name Aurelia-UI
  * @author aurelia
  * @description Interface unlocker for Pengu Loader
- * @link https://github.com/aurelia/Aurelia
+ * @link https://github.com/shazeus/Aurelia
  */
 (function enableLockedSkinPreview() {
   const LOG_PREFIX = "[Aurelia-UI][skin-preview]";

@@ -21,7 +21,7 @@ log = logging.getLogger(__name__)
 # =============================================================================
 
 APP_DISPLAY_NAME = "Aurelia"              # Visible application name
-APP_VERSION = "1.2.9"                          # Application version
+APP_VERSION = "1.3.0"                          # Application version
 APP_USER_AGENT = f"Aurelia/{APP_VERSION}"  # User-Agent header for HTTP requests
 
 _CONFIG = configparser.ConfigParser()

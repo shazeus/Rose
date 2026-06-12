@@ -2,7 +2,7 @@
  * @name Aurelia-RandomSkin
  * @author aurelia
  * @description Random skin for Pengu Loader
- * @link https://github.com/aurelia/Aurelia
+ * @link https://github.com/shazeus/Aurelia
  */
 (function initRandomSkin() {
   const LOG_PREFIX = "[Aurelia-RandomSkin]";

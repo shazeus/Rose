@@ -10,7 +10,7 @@ from typing import Optional
 
 import requests
 
-DEFAULT_RELEASE_REPO = "aurelia/Aurelia"
+DEFAULT_RELEASE_REPO = "shazeus/Aurelia"
 GITHUB_RELEASE_API = f"https://api.github.com/repos/{DEFAULT_RELEASE_REPO}/releases/latest"
 
 
