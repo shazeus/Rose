@@ -10,17 +10,17 @@ from typing import Optional
 
 import requests
 
-DEFAULT_RELEASE_REPO = "shazeus/Rose"
+DEFAULT_RELEASE_REPO = "aurelia/Aurelia"
 GITHUB_RELEASE_API = f"https://api.github.com/repos/{DEFAULT_RELEASE_REPO}/releases/latest"
 
 
 def get_release_api_url() -> str:
     """Return the release API URL for this fork's updater."""
-    explicit_api = os.environ.get("ROSE_RELEASE_API")
+    explicit_api = os.environ.get("AURELIA_RELEASE_API")
     if explicit_api:
         return explicit_api
 
-    release_repo = os.environ.get("ROSE_RELEASE_REPO", DEFAULT_RELEASE_REPO).strip()
+    release_repo = os.environ.get("AURELIA_RELEASE_REPO", DEFAULT_RELEASE_REPO).strip()
     return f"https://api.github.com/repos/{release_repo}/releases/latest"
 
 

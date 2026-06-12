@@ -23,7 +23,7 @@ try:
 except ImportError:
     _CONFIGURED_URL = ""
 
-RELAY_URL = os.environ.get("ROSE_RELAY_URL", _CONFIGURED_URL)
+RELAY_URL = os.environ.get("AURELIA_RELAY_URL", _CONFIGURED_URL)
 PING_INTERVAL = 25.0
 
 

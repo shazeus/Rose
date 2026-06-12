@@ -1,2 +1,2 @@
-# Rose - Modular Skin Injector
+# Aurelia - Modular Skin Injector
 # Main package initialization

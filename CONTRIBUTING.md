@@ -1,21 +1,21 @@
-# Contributing to Rose
+# Contributing to Aurelia
 
-Contributions are welcome! Report bugs or suggest features via GitHub Issues, submit pull requests, or join our [Discord](https://discord.com/invite/roseskins) for discussions.
+Contributions are welcome! Report bugs or suggest features via GitHub Issues, submit pull requests, or join our [Discord](https://discord.com/invite/aureliaskins) for discussions.
 
 ## Setting up dev environment
 
 ```powershell
 # Create conda environment with Python 3.11
-conda create -n rose python=3.11 -y
+conda create -n aurelia python=3.11 -y
 
 # Activate the environment
-conda activate rose
+conda activate aurelia
 
 # Clone the repository
-git clone https://github.com/shazeus/Rose.git
+git clone https://github.com/aurelia/Aurelia.git
 
 # Navigate to project directory
-cd Rose
+cd Aurelia
 
 # Create a feature branch (e.g. feat/skin-preview, fix/chroma-crash, docs/readme)
 git checkout -b feat/your-feature-name
@@ -29,7 +29,7 @@ pip install -r requirements.txt
 ## Project Structure
 
 ```
-Rose/
+Aurelia/
 ├── main.py                 # Application entry point
 ├── config.py               # Configuration constants
 ├── requirements.txt        # Python dependencies
@@ -230,14 +230,14 @@ Rose/
 └── Pengu Loader/           # Pengu Loader and plugins
     ├── Pengu Loader.exe    # Pengu Loader executable
     └── plugins/            # JavaScript plugins
-        ├── ROSE-UI/
-        ├── ROSE-SkinMonitor/
-        ├── ROSE-ChromaWheel/
-        ├── ROSE-FormsWheel/
-        ├── ROSE-CustomWheel/
-        ├── ROSE-SettingsPanel/
-        ├── ROSE-RandomSkin/
-        ├── ROSE-HistoricMode/
-        ├── ROSE-PartyMode/
-        └── ROSE-Jade/
+        ├── AURELIA-UI/
+        ├── AURELIA-SkinMonitor/
+        ├── AURELIA-ChromaWheel/
+        ├── AURELIA-FormsWheel/
+        ├── AURELIA-CustomWheel/
+        ├── AURELIA-SettingsPanel/
+        ├── AURELIA-RandomSkin/
+        ├── AURELIA-HistoricMode/
+        ├── AURELIA-PartyMode/
+        └── AURELIA-Jade/
 ```
