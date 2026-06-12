@@ -16,7 +16,7 @@ try:
 except ImportError:
     Image = None
 
-from config import APP_VERSION
+from config import APP_DISPLAY_NAME, APP_VERSION
 from utils.core.logging import get_named_logger
 from utils.core.paths import get_asset_path
 from utils.system.win32_base import (
@@ -47,7 +47,7 @@ class UpdateDialog(Win32Window):
     def __init__(self) -> None:
         super().__init__(
             class_name="RoseUpdateDialog",
-            window_title=f"Rose {APP_VERSION}",
+            window_title=f"{APP_DISPLAY_NAME} {APP_VERSION}",
             width=420,
             height=120,
             style=WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
@@ -78,7 +78,7 @@ class UpdateDialog(Win32Window):
 
         detail_hwnd = self.create_control(
             "STATIC",
-            "Preparing Rose…",
+            f"Preparing {APP_DISPLAY_NAME}…",
             WS_CHILD | WS_VISIBLE,
             0,
             x_pos,
@@ -313,9 +313,8 @@ class UpdateDialog(Win32Window):
     def _render_status_text(self) -> None:
         if not self.detail_hwnd or not self.status_hwnd:
             return
-        header = self._status_text or self._current_status or "Preparing Rose…"
+        header = self._status_text or self._current_status or f"Preparing {APP_DISPLAY_NAME}…"
         user32.SetWindowTextW(self.detail_hwnd, header)
         user32.InvalidateRect(self.detail_hwnd, None, True)
         user32.SetWindowTextW(self.status_hwnd, self._transfer_text or "")
         user32.InvalidateRect(self.status_hwnd, None, True)
-

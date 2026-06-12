@@ -1,8 +1,8 @@
 /**
  * @name Rose-SkinMonitor
- * @author Rose Team
+ * @author shazeus
  * @description Skin monitor for Pengu Loader
- * @link https://github.com/Alban1911/Rose-SkinMonitor
+ * @link https://github.com/shazeus/Rose
  */
 
 console.log("[SkinMonitor] Plugin loaded");

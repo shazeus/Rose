@@ -1,8 +1,8 @@
 /**
  * @name Rose-PartyMode
- * @author Rose Team
+ * @author shazeus
  * @description Party Mode - See your friends' skins in game via P2P
- * @link https://github.com/Alban1911/Rose
+ * @link https://github.com/shazeus/Rose
  */
 (function initPartyMode() {
   const LOG_PREFIX = "[Rose-PartyMode]";
@@ -679,11 +679,11 @@
     panel.id = PANEL_ID;
     panel.innerHTML = `
       <div class="party-header">
-        <h3>Party Mode</h3>
+        <h3>Shazeus Rose Party</h3>
         <span class="party-status offline">Offline</span>
       </div>
       <div class="party-content">
-        <div class="party-description">Share your skins with friends in the same lobby. Enable party mode and exchange tokens to connect.</div>
+        <div class="party-description">Share selected skins with friends in the same lobby. Enable party mode, copy your token, then add theirs.</div>
 
         <div class="party-section" id="party-toggle-section">
           <button class="party-toggle-btn enable" id="party-toggle-btn">

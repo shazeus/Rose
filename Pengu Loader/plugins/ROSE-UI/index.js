@@ -1,8 +1,8 @@
 /**
  * @name Rose-UI
- * @author Rose Team
+ * @author shazeus
  * @description Interface unlocker for Pengu Loader
- * @link https://github.com/Alban1911/Rose-UI
+ * @link https://github.com/shazeus/Rose
  */
 (function enableLockedSkinPreview() {
   const LOG_PREFIX = "[Rose-UI][skin-preview]";

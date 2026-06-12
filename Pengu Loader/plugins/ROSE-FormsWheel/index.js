@@ -1,8 +1,8 @@
 /**
  * @name ROSE-FormsWheel
- * @author Rose Team
- * @description Custom chroma wheel with asset-based buttons - Adapted from ROSE-ChromaWheel
- * @link https://github.com/Alban1911/Rose-FormsWheel
+ * @author shazeus
+ * @description Shazeus Rose forms wheel with asset-based buttons
+ * @link https://github.com/shazeus/Rose
  */
 (function createFormsWheel() {
   const LOG_PREFIX = "[FormsWheel]";
@@ -415,6 +415,62 @@
       position: absolute;
       text-align: center;
       width: 100%;
+    }
+
+    .${PANEL_CLASS} .rose-flyout-header {
+      position: relative;
+      z-index: 1;
+      padding: 10px 12px 8px;
+      background:
+        linear-gradient(90deg, rgba(200, 170, 110, 0.12), rgba(1, 10, 19, 0.25)),
+        #010a13;
+      border-bottom: 1px solid rgba(120, 90, 40, 0.70);
+      box-sizing: border-box;
+    }
+
+    .${PANEL_CLASS} .rose-flyout-kicker {
+      color: #c89b3c;
+      font-family: "LoL Body", Arial, sans-serif;
+      font-size: 10px;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .${PANEL_CLASS} .rose-flyout-title-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 5px;
+    }
+
+    .${PANEL_CLASS} .rose-flyout-title {
+      min-width: 0;
+      color: #f0e6d2;
+      font-family: "LoL Display", "Times New Roman", Times, serif;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.15;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .${PANEL_CLASS} .rose-flyout-count {
+      flex: 0 0 auto;
+      color: #a09b8c;
+      font-family: "LoL Body", Arial, sans-serif;
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    .${PANEL_CLASS} .rose-flyout-subtitle {
+      color: #a09b8c;
+      font-family: "LoL Body", Arial, sans-serif;
+      font-size: 11px;
+      line-height: 1.3;
+      margin-top: 5px;
     }
 
     .${PANEL_CLASS} .chroma-selection {
@@ -4063,11 +4119,33 @@
     }
 
     const modal = document.createElement("div");
-    modal.className = "champ-select-chroma-modal chroma-view ember-view";
+    modal.className = "champ-select-chroma-modal chroma-modal chroma-view ember-view rose-enhanced-flyout";
 
     // Add border element (matches official structure)
     const border = document.createElement("div");
     border.className = "border";
+
+    const header = document.createElement("div");
+    header.className = "rose-flyout-header";
+    const headerKicker = document.createElement("div");
+    headerKicker.className = "rose-flyout-kicker";
+    headerKicker.textContent = "shazeus rose";
+    const headerTitleRow = document.createElement("div");
+    headerTitleRow.className = "rose-flyout-title-row";
+    const headerTitle = document.createElement("div");
+    headerTitle.className = "rose-flyout-title";
+    headerTitle.textContent = "Forms wheel";
+    const headerCount = document.createElement("div");
+    headerCount.className = "rose-flyout-count";
+    headerCount.textContent = `${chromas.length} form${chromas.length === 1 ? "" : "s"}`;
+    const headerSubtitle = document.createElement("div");
+    headerSubtitle.className = "rose-flyout-subtitle";
+    headerSubtitle.textContent = "Preview each form and pick the one to apply.";
+    headerTitleRow.appendChild(headerTitle);
+    headerTitleRow.appendChild(headerCount);
+    header.appendChild(headerKicker);
+    header.appendChild(headerTitleRow);
+    header.appendChild(headerSubtitle);
 
     // Chroma information section
     const chromaInfo = document.createElement("div");
@@ -4196,6 +4274,10 @@
       chromaButton.className = `chroma-skin-button ${chroma.locked ? "locked" : ""
         } ${chroma.selected ? "selected" : ""} ${chroma.purchaseDisabled ? "purchase-disabled" : ""
         }`;
+      chromaButton.setAttribute("role", "button");
+      chromaButton.setAttribute("tabindex", "0");
+      chromaButton.setAttribute("aria-label", `${chroma.name || "Form"}${chroma.selected ? " selected" : ""}`);
+      chromaButton.title = chroma.name || "Form";
 
       const contents = document.createElement("div");
       contents.className = "contents";
@@ -4350,6 +4432,11 @@
       };
       chromaButton.addEventListener("click", handleClick);
       contents.addEventListener("click", handleClick);
+      chromaButton.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          handleClick(e);
+        }
+      });
 
       // Add hover handlers to update preview (matching official client behavior)
       chromaButton.addEventListener("mouseenter", (e) => {
@@ -4389,6 +4476,7 @@
     });
 
     modal.appendChild(border);
+    modal.appendChild(header);
     modal.appendChild(chromaInfo);
     modal.appendChild(scrollable);
     flyoutContent.appendChild(modal);

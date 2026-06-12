@@ -7,6 +7,7 @@ Command line argument parsing
 import argparse
 
 from config import (
+    APP_DISPLAY_NAME,
     DEFAULT_VERBOSE,
     PHASE_HZ_DEFAULT,
     WS_PING_INTERVAL_DEFAULT,
@@ -21,7 +22,7 @@ from config import (
 def setup_arguments() -> argparse.Namespace:
     """Parse and return command line arguments"""
     ap = argparse.ArgumentParser(
-        description="Rose - Windows UI API skin detection"
+        description=f"{APP_DISPLAY_NAME} - Windows UI API skin detection"
     )
     
     # General arguments
@@ -68,4 +69,3 @@ def setup_arguments() -> argparse.Namespace:
     # Log management arguments (none - retention managed by age in utils.logging)
 
     return ap.parse_args()
-

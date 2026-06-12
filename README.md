@@ -1,8 +1,8 @@
-# Rose - League of Legends için Zahmetsiz Skin Yönetimi
+# Shazeus Rose - League of Legends için Zahmetsiz Skin Yönetimi
 
 <div align="center">
 
-  <img src="./assets/icon.png" alt="Rose Icon" width="128" height="128">
+  <img src="./assets/icon.png" alt="Shazeus Rose Icon" width="128" height="128">
 
 [![Installer](https://img.shields.io/badge/Installer-Windows-32A832)](https://github.com/shazeus/Rose/releases/latest) [![Fork](https://img.shields.io/badge/Fork-shazeus-32A832)](https://github.com/shazeus/Rose) [![Ko-Fi](https://img.shields.io/badge/KoFi-Donate-C03030?logo=ko-fi&logoColor=white)](https://ko-fi.com/roseapp) [![Discord](https://img.shields.io/discord/1490473857075642621?color=32A832&logo=discord&logoColor=white&label=Discord)](https://discord.com/invite/roseskins) [![Lisans](https://img.shields.io/badge/Lisans-MIT-C03030)](LICENSE) [![İndirmeler](https://img.shields.io/github/downloads/shazeus/Rose/total?color=32A832&label=Fork%20Indirmeleri)](https://github.com/shazeus/Rose/releases/latest)
 
@@ -12,20 +12,23 @@
 
 ## Genel Bakış
 
-Bu depo, **shazeus/Rose** forkudur. Forkun amacı Rose'un mevcut çalışma akışını korurken paketleme, görünen proje linkleri, fork notları ve güncelleme kaynağı gibi fork sahibine ait kısımları temiz hale getirmektir.
+Bu depo, **shazeus/Rose** forkudur. Forkun amacı Rose'un mevcut çalışma akışını korurken paketleme, görünen proje linkleri, League Client içi panel metinleri, fork notları ve güncelleme kaynağı gibi fork sahibine ait kısımları temiz hale getirmektir.
 
-Rose, League of Legends için açık kaynaklı bir skin yönetim aracıdır. Uygulama sistem tepsisinde çalışır, şampiyon seçimi sırasında seçilen skinleri takip eder ve oyun yüklenirken yerel görüntü varlıklarını uygular.
+Shazeus Rose, League of Legends için açık kaynaklı bir skin yönetim aracıdır. Uygulama sistem tepsisinde çalışır, şampiyon seçimi sırasında seçilen skinleri takip eder ve oyun yüklenirken yerel görüntü varlıklarını uygular.
 
 Rose, [Pengu Loader](https://github.com/Tariolle/ROSE-Pengu) altyapısını kullanarak League Client içine JavaScript eklentileri entegre eder. Proje yerel model/doku görünüm değişkenleriyle çalışır; ağ verisini, bellek durumunu veya oynanış mekaniklerini manipüle etmeyi hedeflemez ve rekabet avantajı sunmaz.
 
 ## Bu Forkta Yapılan Geliştirmeler
 
 - README, fork kullanıcıları için Türkçe ve daha açık hale getirildi.
-- README, installer metadata ve League Client içindeki SettingsPanel GitHub linkleri `shazeus/Rose` forkuna yönlendirildi.
+- README, installer metadata, plugin metadata, sistem tepsisi başlıkları ve League Client içindeki SettingsPanel GitHub linkleri `shazeus/Rose` forkuna yönlendirildi.
 - [FORK_NOTES.md](FORK_NOTES.md) eklendi; forkta hangi alanların özelleştirildiği ve runtime akışa dokunulmadığı ayrıca belgelendi.
 - Launcher updater artık varsayılan olarak `shazeus/Rose` release'lerini kontrol eder.
 - Özel build ve test senaryoları için updater release kaynağı `ROSE_RELEASE_REPO` veya `ROSE_RELEASE_API` ortam değişkenleriyle değiştirilebilir.
 - Updater release kaynağı için küçük regresyon testleri eklendi.
+- League Client içindeki SettingsPanel'e `Shazeus Rose` kimlik kartı, canlı ayar özeti ve daha düzenli aksiyon butonları eklendi.
+- ChromaWheel ve FormsWheel panellerine seçenek sayacı, kısa kullanım metni, Shazeus Rose başlığı ve klavye ile seçilebilir buton etiketleri eklendi.
+- Party Mode panel başlığı ve açıklaması fork kimliğiyle daha anlaşılır hale getirildi.
 
 ## Mimari
 
@@ -53,7 +56,7 @@ Rose üç ana parçadan oluşur:
 - **ROSE-CustomWheel**: Hover edilen skinler için mod metadata bilgisini gösterir ve mods klasörüne hızlı erişim sağlar.
 - **ROSE-ChromaWheel**: Her chroma varyantını seçmek için gelişmiş chroma arayüzü sunar.
 - **ROSE-FormsWheel**: Birden fazla forma sahip skinler için özel form seçim arayüzü sağlar.
-- **ROSE-SettingsPanel**: League Client içinden erişilebilen Rose ayar panelidir.
+- **ROSE-SettingsPanel**: League Client içinden erişilebilen Shazeus Rose ayar panelidir.
 - **ROSE-RandomSkin**: Rastgele skin seçimi özelliğini sağlar.
 - **ROSE-HistoricMode**: Her şampiyon için son kullanılan skine hızlı erişim verir.
 - **ROSE-PartyMode**: Lobi ve şampiyon seçiminde skin paylaşımı, bağlı kişiler ve arkadaş seçimlerini gösteren paneli sağlar.
@@ -61,7 +64,7 @@ Rose üç ana parçadan oluşur:
 
 ## Nasıl Çalışır?
 
-1. Rose açılış sırasında **[Pengu Loader](https://github.com/Tariolle/ROSE-Pengu)** entegrasyonunu başlatır.
+1. Shazeus Rose açılış sırasında **[Pengu Loader](https://github.com/Tariolle/ROSE-Pengu)** entegrasyonunu başlatır.
 2. `ROSE-SkinMonitor`, şampiyon seçiminde hover edilen skin bilgisini algılar.
 3. Python backend, gelen seçimi ve oyun fazını takip eder.
 4. Oyun yüklenirken seçilen skinin yerel varlıkları uygulanır.
@@ -92,7 +95,7 @@ DMCA kısıtlamaları nedeniyle Rose injection DLL dosyasını dağıtmaz. Kulla
 
 1. En güncel fork installer dosyasını [Releases](https://github.com/shazeus/Rose/releases/latest) sayfasından indirin.
 2. Installer'ı Yönetici olarak çalıştırın.
-3. Rose'u Başlat Menüsü veya masaüstü kısayolundan açın.
+3. Shazeus Rose'u Başlat Menüsü veya masaüstü kısayolundan açın.
 
 ## Fork Ayarları
 
@@ -138,4 +141,4 @@ Upstream Rose topluluğunu desteklemek isterseniz:
 
 ---
 
-**Rose** - _League, unlocked._
+**Shazeus Rose** - _League, unlocked._

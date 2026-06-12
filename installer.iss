@@ -1,13 +1,13 @@
 ; Rose Installer Script for Inno Setup
 ; This creates a proper Windows installer that registers the app
 
-#define MyAppName "Rose"
+#define MyAppName "Shazeus Rose"
 #define MyAppVersion "1.2.9"
 #define MyAppVersionInfo "1.2.9.0"
-#define MyAppPublisher "Rose Team"
+#define MyAppPublisher "shazeus"
 #define MyAppURL "https://github.com/shazeus/Rose"
 #define MyAppExeName "Rose.exe"
-#define MyAppDescription "Effortless skin changer for League of Legends"
+#define MyAppDescription "Shazeus fork of Rose for League of Legends skin management"
 ; Must match config.SINGLE_INSTANCE_MUTEX_NAME (used by the app to enforce single-instance)
 #define MyAppMutex "Local\RoseSingleInstance"
 

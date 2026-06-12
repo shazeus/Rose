@@ -19,6 +19,7 @@ import time
 from typing import Callable
 
 from utils.core.logging import get_logger, get_named_logger
+from config import APP_DISPLAY_NAME
 from utils.system.win32_base import (
     WM_CLOSE,
     SW_SHOWNORMAL,
@@ -44,7 +45,7 @@ def _show_error(message: str) -> None:
         user32.MessageBoxW(
             None,
             message,
-            "Rose - Launcher",
+            f"{APP_DISPLAY_NAME} - Launcher",
             MB_OK | MB_ICONERROR | MB_TOPMOST,
         )
         updater_log.error(f"Error dialog shown to user: {message}")

@@ -17,7 +17,7 @@ try:
 except ImportError:  # pragma: no cover - optional dependency
     Image = None  # type: ignore
 
-from config import get_config_float, get_config_option, set_config_option
+from config import APP_DISPLAY_NAME, get_config_float, get_config_option, set_config_option
 from utils.system.admin_utils import (
     is_admin,
     is_registered_for_autostart,
@@ -488,7 +488,7 @@ def show_injection_settings_dialog() -> None:
         user32.MessageBoxW(
             None,
             f"Failed to save settings:\n\n{exc}",
-            "Rose Settings",
+            f"{APP_DISPLAY_NAME} Settings",
             MB_OK | MB_ICONERROR | MB_TOPMOST,
         )
         # Even if threshold save fails, fall through to process auto-start changes.
@@ -560,4 +560,3 @@ def show_injection_settings_dialog() -> None:
                         "Auto-Start",
                         MB_ICONERROR,
                     )
-

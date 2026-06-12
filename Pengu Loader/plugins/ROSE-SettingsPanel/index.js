@@ -1,11 +1,12 @@
 /**
  * @name Rose-SettingsPanel
- * @author Rose Team
- * @description Settings panel for Rose
- * @link https://github.com/FlorentTariolle/ROSE-SettingsPanel
+ * @author shazeus
+ * @description Settings panel for Shazeus Rose
+ * @link https://github.com/shazeus/Rose
  */
 (function initSettingsPanel() {
   const LOG_PREFIX = "[Rose-SettingsPanel]";
+  const DISPLAY_NAME = "Shazeus Rose";
   const DISCORD_INVITE_URL = "https://discord.gg/roseapp";
   const KOFI_URL = "https://ko-fi.com/roseapp";
   const GITHUB_URL = "https://github.com/shazeus/Rose";
@@ -172,14 +173,99 @@
     #${FLYOUT_ID} .lc-flyout-content {
       background: #010a13 !important;
       background-color: #010a13 !important;
-      background-image: none !important;
+      background-image:
+        radial-gradient(circle at 18% 0%, rgba(200, 170, 110, 0.10), transparent 32%),
+        linear-gradient(180deg, rgba(10, 20, 40, 0.92), #010a13 44%, #010a13) !important;
       border-radius: 0 !important;
       padding: 20px !important;
       width: 100% !important;
       box-sizing: border-box !important;
-      border: none !important;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+      border: 1px solid rgba(200, 170, 110, 0.40) !important;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.72), inset 0 1px 0 rgba(240, 230, 210, 0.08) !important;
       margin: 0 !important;
+    }
+
+    #${FLYOUT_ID} .settings-brand-card {
+      width: 100%;
+      box-sizing: border-box;
+      margin: 4px 0 14px;
+      padding: 12px;
+      background:
+        linear-gradient(90deg, rgba(200, 170, 110, 0.12), rgba(30, 35, 40, 0.65)),
+        rgba(1, 10, 19, 0.72);
+      border: 1px solid rgba(120, 90, 40, 0.72);
+      box-shadow: inset 0 0 0 1px rgba(1, 10, 19, 0.65);
+    }
+
+    #${FLYOUT_ID} .settings-brand-kicker {
+      color: #c89b3c;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    #${FLYOUT_ID} .settings-brand-name {
+      color: #f0e6d2;
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    #${FLYOUT_ID} .settings-brand-copy {
+      color: #a09b8c;
+      font-size: 12px;
+      line-height: 1.35;
+      margin-top: 5px;
+    }
+
+    #${FLYOUT_ID} .settings-health-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    #${FLYOUT_ID} .settings-health-card {
+      min-width: 0;
+      padding: 8px;
+      background: rgba(30, 35, 40, 0.72);
+      border: 1px solid rgba(70, 55, 20, 0.76);
+      box-sizing: border-box;
+    }
+
+    #${FLYOUT_ID} .settings-health-label {
+      color: #7e6f4e;
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    #${FLYOUT_ID} .settings-health-value {
+      color: #cdbe91;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-top: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #${FLYOUT_ID} .settings-action-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    #${FLYOUT_ID} .settings-action-grid lol-uikit-flat-button-secondary {
+      width: 100% !important;
+      margin-top: 0 !important;
     }
     
     #${FLYOUT_ID} .settings-title {
@@ -1546,6 +1632,37 @@
 
     form.appendChild(titleRow);
 
+    const brandCard = document.createElement("div");
+    brandCard.className = "settings-brand-card";
+    brandCard.innerHTML = `
+      <div class="settings-brand-kicker">shazeus fork</div>
+      <div class="settings-brand-name">${DISPLAY_NAME}</div>
+      <div class="settings-brand-copy">Manage skins, chromas, forms, and mods from one League Client panel.</div>
+    `.trim();
+    form.appendChild(brandCard);
+
+    const healthGrid = document.createElement("div");
+    healthGrid.className = "settings-health-grid";
+    [
+      ["Injection", "settings-summary-threshold", "0.50 s"],
+      ["Timeout", "settings-summary-timeout", "60 s"],
+      ["Auto-start", "settings-summary-autostart", "Off"],
+    ].forEach(([label, id, value]) => {
+      const card = document.createElement("div");
+      card.className = "settings-health-card";
+      const labelEl = document.createElement("div");
+      labelEl.className = "settings-health-label";
+      labelEl.textContent = label;
+      const valueEl = document.createElement("div");
+      valueEl.className = "settings-health-value";
+      valueEl.id = id;
+      valueEl.textContent = value;
+      card.appendChild(labelEl);
+      card.appendChild(valueEl);
+      healthGrid.appendChild(card);
+    });
+    form.appendChild(healthGrid);
+
     // Injection threshold section
     const thresholdSection = document.createElement("div");
     thresholdSection.className = "settings-section";
@@ -1790,6 +1907,12 @@
     autostartCheckbox.type = "checkbox";
     autostartCheckbox.className = "settings-checkbox";
     autostartCheckbox.id = "autostart-checkbox";
+    autostartCheckbox.addEventListener("change", () => {
+      const summaryAutostart = document.getElementById("settings-summary-autostart");
+      if (summaryAutostart) {
+        summaryAutostart.textContent = autostartCheckbox.checked ? "On" : "Off";
+      }
+    });
     autostartWrapper.appendChild(autostartCheckbox);
 
     const autostartText = document.createElement("span");
@@ -2102,46 +2225,45 @@
     });
     activeObserver.observe(modsDropdown, { attributes: true, attributeFilter: ['class'] });
 
+    const actionGrid = document.createElement("div");
+    actionGrid.className = "settings-action-grid";
+
     // Open logs folder button
     const logsButton = document.createElement("lol-uikit-flat-button-secondary");
     logsButton.id = "logs-folder-button";
-    logsButton.textContent = "Open Logs Folder";
-    logsButton.style.marginTop = "8px";
-    logsButton.style.width = "100%";
+    logsButton.textContent = "Logs";
     logsButton.addEventListener("click", () => {
       openLogsFolder();
     });
-    form.appendChild(logsButton);
+    actionGrid.appendChild(logsButton);
 
     // Troubleshooting button (opens a small dialog with compact errors)
     const troubleshootButton = document.createElement("lol-uikit-flat-button-secondary");
     troubleshootButton.id = "troubleshoot-button";
     troubleshootButton.textContent = "Troubleshooting";
-    troubleshootButton.style.marginTop = "8px";
-    troubleshootButton.style.width = "100%";
     troubleshootButton.addEventListener("click", () => {
       openDiagnosticsDialog();
     });
-    form.appendChild(troubleshootButton);
+    actionGrid.appendChild(troubleshootButton);
 
 
     // Open Pengu Loader UI button
     const penguUIButton = document.createElement("lol-uikit-flat-button-secondary");
     penguUIButton.id = "pengu-ui-button";
-    penguUIButton.textContent = "Open Pengu Loader UI";
-    penguUIButton.style.marginTop = "8px";
-    penguUIButton.style.width = "100%";
+    penguUIButton.textContent = "Pengu UI";
     penguUIButton.addEventListener("click", () => {
       openPenguLoaderUI();
     });
-    form.appendChild(penguUIButton);
+    actionGrid.appendChild(penguUIButton);
+
+    form.appendChild(actionGrid);
 
     // Save button (moved to last position)
     const saveButton = document.createElement("lol-uikit-flat-button-secondary");
     saveButton.id = "save-button";
     saveButton.textContent = "Save";
     saveButton.style.marginTop = "8px";
-    saveButton.style.width = "21%";
+    saveButton.style.width = "42%";
     saveButton.addEventListener("click", () => {
       saveSettings();
     });
@@ -2253,6 +2375,10 @@
 
       const convertedValue = valueConverter(value);
       valueDisplay.textContent = displayFormatter(convertedValue);
+      const summary = document.getElementById(`settings-summary-${sliderId === "threshold" ? "threshold" : "timeout"}`);
+      if (summary) {
+        summary.textContent = displayFormatter(convertedValue);
+      }
       slider.value = value;
 
       // Maintain hover effects after slider update
@@ -2411,6 +2537,21 @@
       const buttonPosition = (percentage / 100) * maxPosition;
       timeoutButton.style.left = `${buttonPosition}px`;
       timeoutFill.style.width = `${buttonPosition}px`;
+    }
+
+    const summaryThreshold = document.getElementById("settings-summary-threshold");
+    if (summaryThreshold) {
+      summaryThreshold.textContent = `${Number(currentSettings.threshold || 0.5).toFixed(2)} s`;
+    }
+
+    const summaryTimeout = document.getElementById("settings-summary-timeout");
+    if (summaryTimeout) {
+      summaryTimeout.textContent = `${Math.round(currentSettings.monitorAutoResumeTimeout || 60)} s`;
+    }
+
+    const summaryAutostart = document.getElementById("settings-summary-autostart");
+    if (summaryAutostart) {
+      summaryAutostart.textContent = currentSettings.autostart ? "On" : "Off";
     }
 
     if (autostartCheckbox) {

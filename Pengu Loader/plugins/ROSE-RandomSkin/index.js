@@ -1,8 +1,8 @@
 /**
  * @name Rose-RandomSkin
- * @author Rose Team
+ * @author shazeus
  * @description Random skin for Pengu Loader
- * @link https://github.com/FlorentTariolle/Rose-RandomSkin
+ * @link https://github.com/shazeus/Rose
  */
 (function initRandomSkin() {
   const LOG_PREFIX = "[Rose-RandomSkin]";
@@ -708,4 +708,3 @@
     init();
   }
 })();
-

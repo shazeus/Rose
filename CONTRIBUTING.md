@@ -12,7 +12,7 @@ conda create -n rose python=3.11 -y
 conda activate rose
 
 # Clone the repository
-git clone https://github.com/Alban1911/Rose.git
+git clone https://github.com/shazeus/Rose.git
 
 # Navigate to project directory
 cd Rose

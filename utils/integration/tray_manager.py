@@ -11,6 +11,7 @@ import pystray
 from PIL import Image, ImageDraw
 from utils.core.logging import get_logger
 from config import (
+    APP_DISPLAY_NAME,
     APP_VERSION,
     TRAY_READY_MAX_WAIT_S, TRAY_READY_CHECK_INTERVAL_S,
     TRAY_THREAD_JOIN_TIMEOUT_S, TRAY_ICON_WIDTH, TRAY_ICON_HEIGHT,
@@ -186,7 +187,7 @@ class TrayManager:
 
                 show_message_box_threaded(
                     f"Failed to open settings dialog:\n\n{e}",
-                    "Rose Settings",
+                    f"{APP_DISPLAY_NAME} Settings",
                     0x10,  # MB_ICONERROR
                 )
             except Exception:
@@ -195,7 +196,7 @@ class TrayManager:
     def _create_menu(self) -> pystray.Menu:
         """Create the context menu for the tray icon"""
         return pystray.Menu(
-            pystray.MenuItem(f"Rose v{APP_VERSION}", None, enabled=False),
+            pystray.MenuItem(f"{APP_DISPLAY_NAME} v{APP_VERSION}", None, enabled=False),
             pystray.Menu.SEPARATOR,
             pystray.MenuItem("Quit", self._on_quit)
         )
@@ -209,9 +210,9 @@ class TrayManager:
             menu = self._create_menu()
             
             self.icon = pystray.Icon(
-                "Rose",
+                APP_DISPLAY_NAME,
                 icon_image,
-                "Rose",
+                APP_DISPLAY_NAME,
                 menu,
                 default_action=self._on_icon_click
             )

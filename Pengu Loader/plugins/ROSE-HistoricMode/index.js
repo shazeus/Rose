@@ -1,8 +1,8 @@
 /**
  * @name ROSE-HistoricMode
- * @author Rose Team
+ * @author shazeus
  * @description Historic mode for Pengu Loader
- * @link https://github.com/FlorentTariolle/Rose-HistoricMode
+ * @link https://github.com/shazeus/Rose
  */
 (function initHistoricMode() {
   const LOG_PREFIX = "[ROSE-HistoricMode]";
