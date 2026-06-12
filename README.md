@@ -32,8 +32,8 @@ https://github.com/shazeus/Aurelia/releases/latest
 Release assets follow the same style as Rose:
 
 ```txt
-Aurelia_Setup_1.3.0.exe
-update_package_1.3.0.zip
+Aurelia_Setup_1.3.1.exe
+update_package_1.3.1.zip
 ```
 
 Use the setup executable for a normal install. The update package is used by Aurelia's built-in updater.
@@ -124,7 +124,7 @@ python build_all.py
 Create release assets after a successful build:
 
 ```powershell
-python scripts/package_release.py 1.3.0
+python scripts/package_release.py 1.3.1
 ```
 
 ## Release
@@ -132,15 +132,15 @@ python scripts/package_release.py 1.3.0
 Create a version tag:
 
 ```bash
-git tag 1.3.0
-git push origin 1.3.0
+git tag 1.3.1
+git push origin 1.3.1
 ```
 
 GitHub Actions publishes:
 
 ```txt
-release/Aurelia_Setup_1.3.0.exe
-release/update_package_1.3.0.zip
+release/Aurelia_Setup_1.3.1.exe
+release/update_package_1.3.1.zip
 ```
 
 ## Project Layout
